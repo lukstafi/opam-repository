@@ -1,0 +1,49 @@
+opam-version: "2.0"
+synopsis: "Debug logs for selected functions and let-bindings"
+description:
+  "A poor man's `ppx_debug` with formatted logs of let-bound values, function arguments and results."
+maintainer: ["Lukasz Stafiniak"]
+authors: ["Lukasz Stafiniak"]
+license: "LGPL-2.1-or-later"
+tags: ["logger" "debugger" "printf debugging"]
+homepage: "https://github.com/lukstafi/ppx_minidebug"
+doc: "https://lukstafi.github.io/ppx_minidebug/ppx_minidebug"
+bug-reports: "https://github.com/lukstafi/ppx_minidebug/issues"
+depends: [
+  "ocaml" {>= "4.08"}
+  "dune" {>= "3.7"}
+  "ppx_deriving"
+  "ppx_sexp_conv"
+  "ppxlib" {>= "0.25.0"}
+  "printbox"
+  "printbox-text"
+  "printbox-html"
+  "ptime"
+  "sexplib0"
+  "ppx_expect" {with-test & >= "v0.9.0"}
+  "odoc" {with-doc}
+]
+build: [
+  ["dune" "subst"] {dev}
+  [
+    "dune"
+    "build"
+    "-p"
+    name
+    "-j"
+    jobs
+    "@install"
+    "@runtest" {with-test}
+    "@doc" {with-doc}
+  ]
+]
+dev-repo: "git+https://github.com/lukstafi/ppx_minidebug.git"
+url {
+  src:
+    "https://github.com/lukstafi/ppx_minidebug/releases/download/0.3.1-1-gfae4f32/ppx_minidebug-0.3.1-1-gfae4f32.tbz"
+  checksum: [
+    "sha256=15f4102be4b3cd6e6b8e0e0993618d4c6b32770c49bb993a4bf45c32b7f0d09c"
+    "sha512=3b23cbf6fcdb0cf18a7ef784f013f5ec316d587502924274e57fc32b9f3469fff4310fdaf992c7d694adb0e5524cdebfb829e55be43cf1a4117b700e25222f2f"
+  ]
+}
+x-commit-hash: "fae4f32786c75083a08066a2e609a0a33445fc0d"

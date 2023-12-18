@@ -7,21 +7,24 @@ available: [
   (os = "linux")
 ]
 build: [
-  ["sh" "-exc" "echo \"#include  \\\"cuda.h\\\"\" > test.c"]
+  ["sh" "-exc" "echo \"#include  \\\"cuda.h\\\"#include  \\\"nvrtc.h\\\"\\n\" > test.c"]
   ["sh" "-exc" "cc -c $CFLAGS -I/usr/local/cuda/include test.c"]
 ]
 depends: [ "conf-gcc" ]
 depexts: [
   # See: https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#meta-packages
-  # The meta-package cuda-toolkit does not include drivers,
-  # therefore it is safe to install both on regular distributions and on WSL.
+  # The meta-package cuda-toolkit should not include drivers,
+  # therefore it is typically safe to install both on regular distributions and on WSL.
+  # Sometimes (e.g. Arch Linux) cuda-toolkit is provided by a cuda package that does include drivers.
   ["cuda-toolkit"]
 ]
 post-messages: [
-  "The installed package cuda-toolkit does not include CUDA drivers. If not on WSL, consider installing cuda-drivers."
+  "On some systems cuda-toolkit does not include CUDA drivers. If not on WSL, consider installing cuda-drivers."
+  "If the compilation test fails, try linking /usr/local/cuda to your cuda installation directory."
+  {failure}
 ]
 synopsis: "Virtual package relying on a cuda-toolkit system installation"
 description:
-  "This package can only install if cuda-toolkit is installed on the system. cuda-toolkit does not include drivers."
+  "This package can only install if cuda-toolkit is installed on the system. cuda-toolkit might not include drivers."
 bug-reports: "https://github.com/ocaml/opam-repository/issues"
 flags: conf

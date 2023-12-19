@@ -15,8 +15,13 @@ depexts: [
   # See: https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#meta-packages
   # The meta-package cuda-toolkit should not include drivers,
   # therefore it is typically safe to install both on regular distributions and on WSL.
-  # Sometimes (e.g. Arch Linux) cuda-toolkit is provided by a cuda package that does include drivers.
-  ["cuda-toolkit"]
+  # On Arch Linux cuda-toolkit is provided by a cuda package that does include drivers.
+  # Unfortunately, the distributions don't include the packages themselves, need to be added
+  # depending on the system, e.g.:
+  # [sudo dnf config-manager --add-repo | sudo zypper addrepo
+  #    https://developer.download.nvidia.com/compute/cuda/repos/$distro/$arch/cuda-$distro.repo]
+  # or added to [/etc/apt/sources.list.d/].
+  # ["cuda-toolkit"]
 ]
 post-messages: [
   "On some systems cuda-toolkit does not include CUDA drivers. If not on WSL, consider installing cuda-drivers."
